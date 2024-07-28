@@ -1,0 +1,39 @@
+.prescription-wrabber {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 1200px;
+  padding: 12px 0;
+  .certain-category-search-dropdown {
+    color: red !important;
+  }
+  .select {
+    user-select: none;
+  }
+  .content {
+    width: 100%;
+    .basic-info-wrabber {
+      display: flex;
+      flex-direction: column;
+      // height: 30svh;
+      gap: 1em;
+    }
+    .past-history-wrabeer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+
+      .general-tag {
+        width: 100%;
+        text-wrap: balance;
+        text-align: center;
+        padding: 0.5em;
+        font-size: 1em;
+        border-radius: 20px;
+      }
+    }
+  }
+}

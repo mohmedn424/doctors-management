@@ -1,0 +1,30 @@
+.main-app-container {
+  height: 100dvh;
+  overflow-y: auto;
+}
+
+.layout {
+  background-color: rgb(20, 20, 20);
+}
+
+.ant-layout-sider-trigger {
+  background-color: rgb(22, 119, 255) !important;
+  color: white;
+  font-size: 1.2em;
+
+  span {
+    background-color: rgb(75, 150, 255);
+    padding: 10px;
+    border-radius: 50%;
+  }
+}
+
+.ant-layout-sider-zero-width-trigger {
+  --radius: 20px;
+  //   border: 1px solid red;
+  background-color: rgb(22, 119, 255) !important;
+  color: white !important;
+  top: unset !important;
+  bottom: 10% !important;
+  border-radius: 0 var(--radius) var(--radius) 0 !important;
+}
