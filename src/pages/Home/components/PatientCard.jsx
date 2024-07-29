@@ -4,7 +4,7 @@ import { Card, Descriptions, Tag } from 'antd';
 function PatientCard() {
   return (
     <div
-      className="patient-card-wrabber"
+      className="patient-card-wrapper"
       style={{
         width: '100%',
         display: 'flex',

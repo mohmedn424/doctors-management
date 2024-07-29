@@ -1,4 +1,4 @@
-.prescription-wrabber {
+.prescription-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   }
   .content {
     width: 100%;
-    .basic-info-wrabber {
+    .basic-info-wrapper {
       display: flex;
       flex-direction: column;
       // height: 30svh;
@@ -34,6 +34,9 @@
         font-size: 1em;
         border-radius: 20px;
       }
+    }
+
+    .current-history-wrapper {
     }
   }
 }

@@ -1,0 +1,95 @@
+[
+  {
+    "general": [
+      "fever",
+      "decreased/no energy",
+      "loss appetite",
+      "unintended",
+      "weight gain/loss"
+    ]
+  },
+  { "head": ["headache", "injury"] },
+  { "ear": ["difficulty with hearing", "pain", "discharge"] },
+  { "nose": ["runny nose", "nasal congestion", "nose bleed"] },
+  {
+    "mouth/throat": [
+      "sore throat",
+      "difficulty swallowing",
+      "dental problems"
+    ]
+  },
+  {
+    "lung": [
+      "shortness of breath",
+      "coughing",
+      "chest pain",
+      "wheezing",
+      "sputum",
+      "blood in sputum"
+    ]
+  },
+  {
+    "heart": [
+      "pale",
+      "cyanosis",
+      "chest pain",
+      "leg swelling",
+      "faint"
+    ]
+  },
+  {
+    "gastrointestinal": [
+      "abdominal pain",
+      "nausea",
+      "vomiting",
+      "diarrhea",
+      "constipation",
+      "distention",
+      "blood in stool",
+      "black/tarry stool"
+    ]
+  },
+  {
+    "genitourinary": [
+      "painful urination",
+      "urine retention",
+      "incontinence",
+      "difficulty urinating",
+      "blood in urine"
+    ]
+  },
+  {
+    "musculoskeletal": [
+      "deformities",
+      "joint pain",
+      "joint swelling",
+      "difficulty in moving"
+    ]
+  },
+  {
+    "neurologic": [
+      "dizziness",
+      "weakness",
+      "hand shakiness",
+      "seizures"
+    ]
+  },
+  {
+    "skin": [
+      "rash",
+      "itching",
+      "color change",
+      "easy bruising/bleeding",
+      "change in mole"
+    ]
+  },
+  {
+    "Psychiatric": [
+      "frequent mood change",
+      "nervousness",
+      "tension",
+      "feeling down",
+      "unable to sleep at night"
+    ]
+  }
+]
