@@ -49,7 +49,7 @@ const PrescriptionPage = memo(({ id = null }) => {
       break;
   }
   return (
-    <div className="prescription-wrabber">
+    <div className="prescription-wrapper">
       {!id && (
         <AutoComplete options={options} style={{ width: '100%' }}>
           <Input.Search

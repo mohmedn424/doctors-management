@@ -1,5 +1,10 @@
-function CurrentHistory() {
-  return <h1>Current History</h1>;
-}
+import { memo } from 'react';
+import PreviousIllnessesConditions from './PreviousIllnessesConditions';
 
-export default CurrentHistory;
+export default memo(function CurrentHistory() {
+  return (
+    <div className="current-history-wrapper">
+      <PreviousIllnessesConditions />
+    </div>
+  );
+});
