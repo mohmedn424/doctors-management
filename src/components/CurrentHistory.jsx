@@ -1,6 +1,6 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import PreviousIllnessesConditions from './PreviousIllnessesConditions';
-import { Select } from 'antd';
+import DiagnosisSelector from './DiagnosisSelector';
 
 export default memo(function CurrentHistory() {
   return (
@@ -10,7 +10,7 @@ export default memo(function CurrentHistory() {
       <div className="current-examintion">
         <h1 style={{ textAlign: 'center' }}>Current Examition</h1>
         <br />
-        <Select style={{ width: '100%' }} />
+        <DiagnosisSelector />
       </div>
     </div>
   );

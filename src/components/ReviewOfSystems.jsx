@@ -35,7 +35,7 @@ export default function ReviewOfSystems() {
       })}
 
       <Form.Item name="notes" label="notes/other">
-        <Input />
+        <Input.TextArea autoSize />
       </Form.Item>
     </Form>
   );

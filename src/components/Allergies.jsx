@@ -17,7 +17,7 @@ export default memo(function Allergies() {
         />
       </Form.Item>
       <Form.Item name="notes" label="notes/other">
-        <Input />
+        <Input.TextArea autoSize />
       </Form.Item>
     </Form>
   );

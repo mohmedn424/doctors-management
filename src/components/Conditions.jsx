@@ -45,7 +45,7 @@ const options = items.map((item) => ({
 
 export default function Conditions() {
   return (
-    <Form size="large" layout="vertical">
+    <Form size="large" layout="horizontal">
       <Form.Item name="conditions">
         <Select
           options={options}
@@ -56,7 +56,7 @@ export default function Conditions() {
         />
       </Form.Item>
       <Form.Item name="notes" label="notes/other">
-        <Input />
+        <Input.TextArea autoSize />
       </Form.Item>
     </Form>
   );
