@@ -1,23 +1,26 @@
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { Select } from 'antd';
 import pb from '../lib/pocketbase.js';
 import useSWR from 'swr';
 import {
   useFullDaignosisFetch,
   useResultDiagnosis,
+  useSelectedDiagnosis,
 } from '../store.js';
 import { useShallow } from 'zustand/react/shallow';
-export default function DiagnosisSelector() {
+
+export default memo(function DiagnosisSelector() {
   const { resultData, setResultData } = useResultDiagnosis();
 
-  const currentData = useFullDaignosisFetch(
-    useShallow((state) => state.currentData)
+  const setSelected = useSelectedDiagnosis(
+    (state) => state.setSelected
   );
+
   const setDiagnosis = useFullDaignosisFetch(
     useShallow((state) => state.setDiagnosis)
   );
 
-  const { data, isLoading, mutate } = useSWR(
+  const { data, isLoading } = useSWR(
     'get-diseases',
     async () =>
       await pb.collection('diseases').getFullList({
@@ -33,21 +36,23 @@ export default function DiagnosisSelector() {
 
   return (
     <>
-      <h2>Diagnosis</h2>
+      <h3>Diagnosis</h3>
       <br />
       <Select
+        size="large"
+        loading={isLoading}
         onSearch={(e) => setResultData(e)}
-        onChange={(e) => console.log(e)}
+        onChange={(e) => setSelected(e)}
         mode="multiple"
-        placeholder="Start adding your diagnosis"
-        tokenSeparators={[',']}
+        placeholder="Start adding diagnosis"
         style={{ width: '100%' }}
         filterOption={false}
-        options={resultData.length > 0 ? resultData : currentData}
+        options={resultData}
         allowClear
         labelInValue
+        placement="bottomLeft"
         maxCount={6}
       />
     </>
   );
-}
+});

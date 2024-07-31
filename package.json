@@ -14,13 +14,13 @@
     "antd": "^5.19.2",
     "dayjs": "^1.11.12",
     "fuse.js": "^7.0.0",
+    "localbase": "^0.7.7",
     "pocketbase": "^0.21.4",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-to-print": "^2.15.1",
     "swr": "^2.2.5",
-    "swr-sync-storage": "^1.0.1",
     "zustand": "^4.5.4"
   },
   "devDependencies": {

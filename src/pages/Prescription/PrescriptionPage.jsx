@@ -36,6 +36,9 @@ const PrescriptionPage = memo(({ id = null }) => {
       if (routeState.newComer) setStatus('new');
     }
   }, [routeState]);
+  useEffect(() => {
+    setCurrent(0);
+  }, []);
 
   switch (current) {
     case 0:

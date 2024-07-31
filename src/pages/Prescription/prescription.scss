@@ -37,6 +37,55 @@
     }
 
     .current-history-wrapper {
+      .select-drugs-wrabber {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div {
+          display: flex;
+          align-items: center;
+          label {
+            margin-right: 0.5em;
+          }
+        }
+      }
+
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 3em;
+        width: 100%;
+        .fields-wrabber {
+          display: flex;
+          flex-direction: column;
+          gap: 3em;
+          width: 100%;
+          .details-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-between;
+            gap: 1em;
+          }
+          .ant-form-item {
+            margin: 0;
+          }
+        }
+        .form-items-container {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+
+          gap: 1em;
+
+          .ant-input-number-input-wrap {
+            input {
+              text-align: center;
+            }
+          }
+        }
+      }
     }
   }
 }

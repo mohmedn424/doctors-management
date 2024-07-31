@@ -31,7 +31,7 @@ const BasicInfo = memo(() => {
             </span>
           }
         >
-          <Input />
+          <Input style={{ textAlign: 'center', fontSize: 26 }} />
         </Form.Item>
         <Form.Item label="Age">
           <DatePicker
