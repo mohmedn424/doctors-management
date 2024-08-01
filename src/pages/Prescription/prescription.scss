@@ -37,6 +37,19 @@
     }
 
     .current-history-wrapper {
+      .table-wrapper {
+        .column {
+          text-wrap: pretty;
+          text-transform: capitalize;
+        }
+        .actins-wrapper {
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 1em;
+        }
+      }
       .select-drugs-wrabber {
         display: flex;
         align-items: center;

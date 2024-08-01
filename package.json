@@ -10,17 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.4.0",
     "@tanstack/react-router": "^1.45.10",
     "antd": "^5.19.2",
     "dayjs": "^1.11.12",
     "fuse.js": "^7.0.0",
-    "localbase": "^0.7.7",
+    "idb-keyval": "^6.2.1",
     "pocketbase": "^0.21.4",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-to-print": "^2.15.1",
-    "swr": "^2.2.5",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
@@ -34,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "sass": "^1.77.8",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

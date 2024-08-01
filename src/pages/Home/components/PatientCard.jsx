@@ -33,14 +33,15 @@ function PatientCard() {
           // bordered
           column={{ md: 3, sm: 2 }}
         >
-          <Descriptions.Item label="Full name" span={3}>
+          <Descriptions.Item
+            label="Full name"
+            span={{ md: 3, sm: 2 }}
+          >
             محمد نبيل رفاعي أحمد
           </Descriptions.Item>
           <Descriptions.Item label="Age">23 years</Descriptions.Item>
           <Descriptions.Item label="sex">Male</Descriptions.Item>
-          <Descriptions.Item span={2} label="Address">
-            Namul
-          </Descriptions.Item>
+          <Descriptions.Item label="Address">Namul</Descriptions.Item>
           <Descriptions.Item label="Last visit">
             10/7/2024
           </Descriptions.Item>

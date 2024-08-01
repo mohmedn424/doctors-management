@@ -1,11 +1,8 @@
-import pb from '../lib/pocketbase.js';
-import useSWR from 'swr';
-import { useEffect, useRef } from 'react';
-
 import {
   Button,
   Form,
   InputNumber,
+  message,
   Radio,
   Select,
   Switch,
@@ -13,14 +10,20 @@ import {
 import {
   useDrugSearchType,
   useDrugSearchValue,
-  useFullDrugsFetch,
   useResultDrugs,
+  useSelectedDrug,
   useSelectedDrugs,
-} from '../store.js';
-import { useShallow } from 'zustand/react/shallow';
+} from '../drugsStore';
 export default function DrugsSelector() {
   const [form] = Form.useForm();
-  const drugsRef = useRef();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const setSelectedDrugs = useSelectedDrugs(
+    (state) => state.setSelectedDrugs
+  );
+  const selectedDrugs = useSelectedDrugs(
+    (state) => state.selectedDrugs
+  );
 
   const { resultData, setResultData } = useResultDrugs();
   const searchValue = useDrugSearchValue(
@@ -31,35 +34,30 @@ export default function DrugsSelector() {
   );
   const setType = useDrugSearchType((state) => state.setType);
 
-  const setSelected = useSelectedDrugs((state) => state.setSelected);
-  const selected = useSelectedDrugs((state) => state.selected);
-
-  const setDrugs = useFullDrugsFetch(
-    useShallow((state) => state.setDrugs)
-  );
-
-  const { data, isLoading } = useSWR(
-    'get-drugs',
-    async () =>
-      await pb.collection('drugs_new').getFullList({
-        sort: 'tradename',
-      })
-  );
-
-  useEffect(() => {
-    if (data !== undefined) {
-      setDrugs(data);
-    }
-  }, [data]);
+  const setSelected = useSelectedDrug((state) => state.setSelected);
+  const selected = useSelectedDrug((state) => state.selected);
 
   const submitHandler = (e) => {
+    const data = {
+      tradename: e.drug.title[0],
+      activeingredient: e.drug.title[1],
+      dose: e.dose,
+      doseType: e.doseType,
+      duration: e.duration,
+      durationType: e.durationType,
+      id: e.drug.key,
+    };
     form.resetFields();
-
-    console.log(e);
+    if (selectedDrugs.some((el) => el.id === e.drug.key)) {
+      messageApi.error('الدواء تمت اضافته بالفعل');
+      return;
+    }
+    setSelectedDrugs([...selectedDrugs, data]);
   };
 
   return (
     <>
+      {contextHolder}
       <div className="select-drugs-wrabber">
         <h3>Select Drugs</h3>
         <div>
@@ -99,7 +97,6 @@ export default function DrugsSelector() {
             ]}
           >
             <Select
-              ref={drugsRef}
               showSearch
               size="large"
               onSearch={(e) => {
@@ -107,8 +104,11 @@ export default function DrugsSelector() {
                 setResultData(e);
               }}
               searchValue={searchValue}
-              onChange={(e) => setSelected(e)}
-              placeholder="Start adding diagnosis"
+              onChange={(e) => {
+                setSelected(e);
+              }}
+              // virtual={false}
+              placeholder="Start adding drugs"
               filterOption={false}
               style={{ width: '100%' }}
               options={resultData}

@@ -3,6 +3,7 @@ import './home.scss';
 import QuickAcess from './components/QuickAccess';
 import Statistics from './components/Statistics';
 import PatientCard from './components/PatientCard';
+import { memo } from 'react';
 
 function HomePage() {
   return (
@@ -14,4 +15,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default memo(HomePage);
