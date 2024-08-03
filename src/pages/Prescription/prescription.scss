@@ -62,42 +62,41 @@
           }
         }
       }
+    }
+  }
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 3em;
+  width: 100%;
+  .fields-wrabber {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    width: 100%;
+    .details-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-between;
+      gap: 1em;
+    }
+    .ant-form-item {
+      margin: 0;
+    }
+  }
+  .form-items-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 
-      .form-container {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        gap: 3em;
-        width: 100%;
-        .fields-wrabber {
-          display: flex;
-          flex-direction: column;
-          gap: 3em;
-          width: 100%;
-          .details-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-            justify-content: space-between;
-            gap: 1em;
-          }
-          .ant-form-item {
-            margin: 0;
-          }
-        }
-        .form-items-container {
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
+    gap: 1em;
 
-          gap: 1em;
-
-          .ant-input-number-input-wrap {
-            input {
-              text-align: center;
-            }
-          }
-        }
+    .ant-input-number-input-wrap {
+      input {
+        text-align: center;
       }
     }
   }

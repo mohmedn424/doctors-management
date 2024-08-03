@@ -1,115 +1,24 @@
 import { memo } from 'react';
-import img from '../assets/rxSign.png';
 import PreviousIllnessesConditions from './PreviousIllnessesConditions';
 import DiagnosisSelector from './DiagnosisSelector';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-
-import {
-  Button,
-  Collapse,
-  ConfigProvider,
-  Space,
-  Table,
-  Tag,
-} from 'antd';
+import { Button, Collapse, ConfigProvider, Table, Tag } from 'antd';
 import DrugsSelector from './DrugsSelector';
 import CollapsePanel from 'antd/es/collapse/CollapsePanel';
 import { useSelectedDiagnosis } from '../store';
 import { useSelectedDrugs } from '../drugsStore';
-
-const setSelectedDrugs = useSelectedDrugs.getState().setSelectedDrugs;
-const selectedDrugs = useSelectedDrugs.getState().selectedDrugs;
-
-const columns = [
-  {
-    title: (
-      <img src={img} width={25} style={{ filter: 'invert(100%)' }} />
-    ),
-    render: (_, record) => {
-      return <h3>{record.key}</h3>;
-    },
-    width: 20,
-    align: 'center',
-  },
-  {
-    title: 'Tradename',
-    dataIndex: 'tradename',
-    key: 'tradename',
-    className: 'tradename-column',
-  },
-
-  {
-    title: 'Dosage',
-    dataIndex: 'dosage',
-    key: 'dosage',
-    align: 'center',
-    className: 'column',
-  },
-  {
-    title: 'Frequency',
-    dataIndex: 'frequency',
-    key: 'frequency',
-    align: 'center',
-    responsive: ['md'],
-    className: 'column',
-  },
-
-  {
-    title: 'Duration',
-    dataIndex: 'duration',
-    key: 'duration',
-    align: 'center',
-    responsive: ['md'],
-    className: 'column',
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    align: 'center',
-    // responsive: ['md'],
-
-    render: (_, record) => {
-      // const handleDelete = () => {
-      //   const newArr = selectedDrugs.filter(
-      //     (el) => el.id != record.id
-      //   );
-      //   setSelectedDrugs(newArr);
-      // };
-
-      return (
-        <div className="actins-wrapper">
-          <Button icon={<EditOutlined />} type="default" />
-          <Button
-            icon={<DeleteOutlined />}
-            type="dashed"
-            danger
-            // onClick={() => {
-            //   handleDelete();
-            // }}
-          />
-        </div>
-      );
-    },
-  },
-];
+import EditModal, { columns } from './DrugsColumns';
 
 export default memo(function CurrentHistory() {
   const selected = useSelectedDiagnosis((state) => state.selected);
-  const selectedDrugs = useSelectedDrugs(
-    (state) => state.selectedDrugs
-  );
+  const { selectedDrugs } = useSelectedDrugs();
 
   return (
     <ConfigProvider
       theme={{
-        components: {
-          // Select: {
-          //   optionFontSize: 16,
-          //   fontSizeIcon: 20,
-          // },
-        },
+        components: {},
       }}
     >
+      <EditModal />
       <div className="current-history-wrapper">
         <Collapse
           accordion
@@ -139,42 +48,46 @@ export default memo(function CurrentHistory() {
           className="table-wrapper"
           rowKey="id"
           columns={columns}
-          dataSource={selectedDrugs.map((drug, index) => {
-            const {
-              tradename,
-              activeingredient,
-              dose,
-              doseType,
-              duration,
-              durationType,
-            } = drug;
+          dataSource={selectedDrugs.map(
+            (
+              {
+                tradename,
+                activeingredient,
+                dose,
+                doseType,
+                duration,
+                durationType,
+                id,
+              },
+              index
+            ) => {
+              const frequency = `Every ${Math.trunc(24 / dose)} hours`;
 
-            const frequency = `Every ${Math.trunc(24 / dose)} hours`;
-
-            return {
-              tradename: (
-                <div>
-                  <h3>{tradename}</h3>
-                  {activeingredient.length > 0 && (
-                    <>
-                      <br />
-                      <Tag
-                        color="green"
-                        style={{ textWrap: 'pretty' }}
-                      >
-                        {activeingredient}
-                      </Tag>
-                    </>
-                  )}
-                </div>
-              ),
-              dosage: `${dose} units | ${doseType}`,
-              frequency: frequency,
-              duration: `For ${duration} ${durationType}`,
-              key: index + 1,
-              id: drug.id,
-            };
-          })}
+              return {
+                tradename: (
+                  <div>
+                    <h3>{tradename}</h3>
+                    {activeingredient.length > 0 && (
+                      <>
+                        <br />
+                        <Tag
+                          color="green"
+                          style={{ textWrap: 'pretty' }}
+                        >
+                          {activeingredient}
+                        </Tag>
+                      </>
+                    )}
+                  </div>
+                ),
+                dosage: `${dose} units | ${doseType}`,
+                frequency: frequency,
+                duration: `For ${duration} ${durationType}`,
+                key: index + 1,
+                id: id,
+              };
+            }
+          )}
           pagination={false}
           title={() => (
             <>

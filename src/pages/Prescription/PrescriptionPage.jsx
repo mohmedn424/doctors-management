@@ -7,9 +7,11 @@ import CurrentHistory from '../../components/CurrentHistory';
 import {
   useCurrentPrescriptionType,
   useCurrentTab,
+  useSelectedDiagnosis,
 } from '../../store';
 import { useRouterState } from '@tanstack/react-router';
 import { memo, useEffect } from 'react';
+import { useSelectedDrugs } from '../../drugsStore';
 
 const arr = new Array(100).fill({ label: 'patient name' });
 
@@ -24,6 +26,12 @@ let render;
 
 const PrescriptionPage = memo(({ id = null }) => {
   const { current, setCurrent } = useCurrentTab();
+  const setSelectedDrugs = useSelectedDrugs(
+    (state) => state.setSelectedDrugs
+  );
+  const setSelected = useSelectedDiagnosis(
+    (state) => state.setSelected
+  );
   const { status, setStatus } = useCurrentPrescriptionType();
 
   const routeState = useRouterState({
@@ -38,6 +46,8 @@ const PrescriptionPage = memo(({ id = null }) => {
   }, [routeState]);
   useEffect(() => {
     setCurrent(0);
+    setSelectedDrugs([]);
+    setSelected([]);
   }, []);
 
   switch (current) {

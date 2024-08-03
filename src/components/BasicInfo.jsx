@@ -1,8 +1,16 @@
-import { DatePicker, Form, Input, Radio, Tag } from 'antd';
+import {
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Tag,
+} from 'antd';
 import dayjs from 'dayjs';
 import { memo } from 'react';
 
 import { useBasicPatientInfo } from '../store';
+import { PhoneFilled } from '@ant-design/icons';
 
 const BasicInfo = memo(() => {
   const { basicInfo, setBasicInfo } = useBasicPatientInfo();
@@ -108,7 +116,15 @@ const BasicInfo = memo(() => {
           <Input />
         </Form.Item>
         <Form.Item label="Contact Phone" name="contactPhone">
-          <Input />
+          <InputNumber
+            controls={false}
+            style={{
+              width: 'fit-content',
+            }}
+            addonAfter={
+              <PhoneFilled style={{ fontSize: 22, color: 'green' }} />
+            }
+          />
         </Form.Item>
         <Form.Item
           label="Martial status"

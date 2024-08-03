@@ -1,5 +1,5 @@
 import { Button, Card } from 'antd';
-import img from '../../../assets/userpp.jpg';
+import img from '../../../assets/userpp.webp';
 import { Link } from '@tanstack/react-router';
 const { Meta } = Card;
 function QuickAccess() {
@@ -7,7 +7,11 @@ function QuickAccess() {
     <>
       <Card
         cover={<img alt="example" src={img} height={120} />}
-        style={{ marginTop: 12, display: 'flex', width: '100%' }}
+        style={{
+          marginTop: 12,
+          display: 'flex',
+          width: '100%',
+        }}
       >
         <Meta title="Dr: username" description="Internal Medcine" />
       </Card>

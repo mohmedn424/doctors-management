@@ -69,6 +69,7 @@ export const useDrugSearchType = create((set) => ({
   type: false,
   setType: (newval) => set({ type: newval }),
 }));
+
 export const useDrugSearchValue = create((set) => ({
   searchValue: false,
   setSearchValue: (newval) => set({ searchValue: newval }),
@@ -101,7 +102,7 @@ export const useResultDrugs = create((set) => ({
 }));
 
 export const useSelectedDrug = create((set) => ({
-  selected: [],
+  selected: undefined,
   setSelected: (newval) => {
     set({ selected: newval });
   },
@@ -112,10 +113,56 @@ export const useSelectedDrugs = create((set) => ({
   setSelectedDrugs: (newval) => {
     set({ selectedDrugs: newval });
   },
-}));
-export const useDrugsLoadingStatus = create((set) => ({
-  loading: false,
-  setLoading: (newval) => {
-    set({ loading: newval });
+
+  removeDrug: (id) => {
+    const currentDrugs = useSelectedDrugs.getState().selectedDrugs;
+
+    if (currentDrugs.length > 1) {
+      const newDrugs = currentDrugs.filter((item) => item.id !== id);
+      set({ selectedDrugs: newDrugs });
+    } else {
+      set({ selectedDrugs: [] });
+    }
+  },
+
+  editDrug: (id, data) => {
+    const currentDrugs = useSelectedDrugs.getState().selectedDrugs;
+    const drugIndex = currentDrugs.findIndex((drug) => drug.id == id);
+    const currentDrug = currentDrugs[drugIndex];
+
+    currentDrugs[drugIndex] = {
+      ke: id,
+      ...currentDrug,
+      ...data,
+    };
+    console.log(currentDrugs);
+    set({ selectedDrugs: currentDrugs });
   },
 }));
+
+export const useEditModalState = create((set) => ({
+  modalStatus: false,
+  setModalStatus: (newval) => {
+    set({ modalStatus: newval });
+  },
+
+  drugId: '',
+  setDrugId: (newVal) => {
+    const currentDrugs = useSelectedDrugs.getState().selectedDrugs;
+
+    set({
+      drugToEdit: currentDrugs.find((drug) => drug.id === newVal),
+    });
+
+    set({ drugId: newVal });
+  },
+
+  drugToEdit: {},
+}));
+
+// export const useDrugsLoadingStatus = create((set) => ({
+//   loading: false,
+//   setLoading: (newval) => {
+//     set({ loading: newval });
+//   },
+// }));
