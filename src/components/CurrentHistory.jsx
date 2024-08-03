@@ -1,17 +1,15 @@
 import { memo } from 'react';
 import PreviousIllnessesConditions from './PreviousIllnessesConditions';
 import DiagnosisSelector from './DiagnosisSelector';
-import { Button, Collapse, ConfigProvider, Table, Tag } from 'antd';
+import { Card, Collapse, ConfigProvider } from 'antd';
 import DrugsSelector from './DrugsSelector';
 import CollapsePanel from 'antd/es/collapse/CollapsePanel';
-import { useSelectedDiagnosis } from '../store';
-import { useSelectedDrugs } from '../drugsStore';
-import EditModal, { columns } from './DrugsColumns';
+
+import EditModal from './DrugsColumns';
+import PrescriptionTable from './PrescriptionTable';
+import TreatmentsSelector from './TreatmentsSelector';
 
 export default memo(function CurrentHistory() {
-  const selected = useSelectedDiagnosis((state) => state.selected);
-  const { selectedDrugs } = useSelectedDrugs();
-
   return (
     <ConfigProvider
       theme={{
@@ -21,7 +19,6 @@ export default memo(function CurrentHistory() {
       <EditModal />
       <div className="current-history-wrapper">
         <Collapse
-          accordion
           defaultActiveKey={2}
           size="large"
           bordered={false}
@@ -34,85 +31,21 @@ export default memo(function CurrentHistory() {
           >
             <PreviousIllnessesConditions />
           </CollapsePanel>
-          <CollapsePanel key={2} header="Current Examition">
+          <CollapsePanel key={2} header={<h3>Diagnosis & Drugs</h3>}>
             <DiagnosisSelector />
             <br />
             <br />
             <DrugsSelector />
           </CollapsePanel>
+
+          <CollapsePanel header={<h3>Treatments</h3>} key={3}>
+            <TreatmentsSelector />
+          </CollapsePanel>
         </Collapse>
         <br />
-        <Table
-          size="large"
-          bordered
-          className="table-wrapper"
-          rowKey="id"
-          columns={columns}
-          dataSource={selectedDrugs.map(
-            (
-              {
-                tradename,
-                activeingredient,
-                dose,
-                doseType,
-                duration,
-                durationType,
-                id,
-              },
-              index
-            ) => {
-              const frequency = `Every ${Math.trunc(24 / dose)} hours`;
-
-              return {
-                tradename: (
-                  <div>
-                    <h3>{tradename}</h3>
-                    {activeingredient.length > 0 && (
-                      <>
-                        <br />
-                        <Tag
-                          color="green"
-                          style={{ textWrap: 'pretty' }}
-                        >
-                          {activeingredient}
-                        </Tag>
-                      </>
-                    )}
-                  </div>
-                ),
-                dosage: `${dose} units | ${doseType}`,
-                frequency: frequency,
-                duration: `For ${duration} ${durationType}`,
-                key: index + 1,
-                id: id,
-              };
-            }
-          )}
-          pagination={false}
-          title={() => (
-            <>
-              <h1>Current Drugs</h1>
-              <p style={{ fontSize: 16 }}>
-                {selected.length > 0 && (
-                  <>
-                    Diagnosis: <br />
-                    {selected.map((item, index) => {
-                      return (
-                        <strong key={item.id}>
-                          {index + 1}: {item.label}
-                          {selected[selected.length - 1].value ===
-                          item.value
-                            ? ''
-                            : ' - '}
-                        </strong>
-                      );
-                    })}
-                  </>
-                )}
-              </p>
-            </>
-          )}
-        />
+        <br />
+        <PrescriptionTable />
+        <br />
       </div>
     </ConfigProvider>
   );

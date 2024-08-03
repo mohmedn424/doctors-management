@@ -6,11 +6,13 @@ import pb from './lib/pocketbase';
 import { message, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
+const DATAVERSION = '1.0';
+
 const fetchDiagnosis = async () => {
   get('diagnosis').then(async (val) => {
     const setDiagnosis =
       useFullDaignosisFetch.getState().setDiagnosis;
-    if (val === undefined) {
+    if (val === undefined || val.DATAVERSION !== DATAVERSION) {
       notification.open({
         message: (
           <span>
@@ -33,9 +35,10 @@ const fetchDiagnosis = async () => {
       });
       const records = await pb.collection('diseases').getFullList({
         sort: 'disease',
+        // fields: 'disease,id',
       });
+      set('diagnosis', { records, DATAVERSION });
       setDiagnosis(records);
-      set('diagnosis', records);
       notification.destroy('loadingDiagnosis');
       message.success({
         content: 'Diagnosis database downloaded successfully',
@@ -43,7 +46,7 @@ const fetchDiagnosis = async () => {
         duration: 6,
       });
     } else {
-      setDiagnosis(val);
+      setDiagnosis(val.records);
     }
   });
 };
@@ -90,6 +93,7 @@ export const useResultDiagnosis = create((set) => ({
       keys: ['label'],
       threshold: 0.2,
       ignoreLocation: true,
+      useExtendedSearch: true,
     });
     const results = fuse.search(searchValue);
 

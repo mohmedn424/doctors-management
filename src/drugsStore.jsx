@@ -6,11 +6,12 @@ import { get, set } from 'idb-keyval';
 import { message, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
+const DATAVERSION = '1.1';
+
 const fetchDrugs = async () => {
   get('drugs').then(async (val) => {
     const setDrugs = useFullDrugsOptions.getState().setDrugs;
-
-    if (val === undefined || val.length < 26161) {
+    if (val === undefined || val.DATAVERSION !== DATAVERSION) {
       notification.open({
         message: (
           <span>
@@ -31,10 +32,11 @@ const fetchDrugs = async () => {
         placement: 'bottomRight',
         icon: <LoadingOutlined />,
       });
-      const records = await pb.collection('drugs_new').getFullList({
+      const records = await pb.collection('drugs').getFullList({
         sort: 'tradename',
+        fields: 'tradename,activeingredient,new_price',
       });
-      set('drugs', records);
+      set('drugs', { records, DATAVERSION });
       setDrugs(records);
       notification.destroy('loadingDrugs');
       message.success({
@@ -43,7 +45,7 @@ const fetchDrugs = async () => {
         duration: 6,
       });
     } else {
-      setDrugs(val);
+      setDrugs(val.records);
     }
   });
 };
@@ -65,6 +67,7 @@ export const useFullDrugsOptions = create((set) => ({
     set({ drugsData: options });
   },
 }));
+
 export const useDrugSearchType = create((set) => ({
   type: false,
   setType: (newval) => set({ type: newval }),
