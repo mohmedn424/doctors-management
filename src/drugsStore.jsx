@@ -6,7 +6,7 @@ import { get, set } from 'idb-keyval';
 import { message, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-const DATAVERSION = '1.1';
+const DATAVERSION = '1.0';
 
 const fetchDrugs = async () => {
   get('drugs').then(async (val) => {

@@ -1,6 +1,6 @@
 import './prescription.scss';
 
-import { AutoComplete, Input, Segmented, Steps } from 'antd';
+import { Button, Segmented, Select, Steps } from 'antd';
 import BasicInfo from '../../components/BasicInfo';
 import PastHistory from '../../components/PastHistory';
 import CurrentHistory from '../../components/CurrentHistory';
@@ -12,6 +12,7 @@ import {
 import { useRouterState } from '@tanstack/react-router';
 import { memo, useEffect } from 'react';
 import { useSelectedDrugs } from '../../drugsStore';
+import PatientSearch from '../../components/PatientSearch';
 
 const arr = new Array(100).fill({ label: 'patient name' });
 
@@ -63,14 +64,7 @@ const PrescriptionPage = memo(({ id = null }) => {
   }
   return (
     <div className="prescription-wrapper">
-      {!id && (
-        <AutoComplete options={options} style={{ width: '100%' }}>
-          <Input.Search
-            size="large"
-            placeholder="Select Patient"
-          ></Input.Search>
-        </AutoComplete>
-      )}
+      {!id && <PatientSearch />}
       <Segmented
         size="large"
         block
