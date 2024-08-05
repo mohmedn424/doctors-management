@@ -1,6 +1,5 @@
 import { ConfigProvider, theme } from 'antd';
 import { routeTree } from './routeTree.gen';
-import 'simplebar-react/dist/simplebar.min.css';
 
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 
