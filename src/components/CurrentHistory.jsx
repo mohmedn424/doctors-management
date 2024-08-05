@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import PreviousIllnessesConditions from './PreviousIllnessesConditions';
 import DiagnosisSelector from './DiagnosisSelector';
-import { Card, Collapse, ConfigProvider } from 'antd';
+import { Collapse, ConfigProvider, Segmented } from 'antd';
 import DrugsSelector from './DrugsSelector';
 import CollapsePanel from 'antd/es/collapse/CollapsePanel';
 
@@ -17,9 +17,10 @@ export default memo(function CurrentHistory() {
       }}
     >
       <EditModal />
+
       <div className="current-history-wrapper">
         <Collapse
-          defaultActiveKey={2}
+          // defaultActiveKey={2}
           size="large"
           bordered={false}
           expandIconPosition="end"
@@ -38,7 +39,7 @@ export default memo(function CurrentHistory() {
             <DrugsSelector />
           </CollapsePanel>
 
-          <CollapsePanel header={<h3>Treatments</h3>} key={3}>
+          <CollapsePanel header={<h3>Labs & Scans</h3>} key={3}>
             <TreatmentsSelector />
           </CollapsePanel>
         </Collapse>

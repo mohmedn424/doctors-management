@@ -1,19 +1,31 @@
 .prescription-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  max-width: 1200px;
-  padding: 12px 0;
-  .certain-category-search-dropdown {
-    color: red !important;
-  }
+  width: 90vw;
+
+  padding-top: 1em;
+
   .select {
     user-select: none;
+    .ant-steps-item-container {
+      padding-bottom: 5px;
+      .ant-steps-item-icon {
+        line-height: 24px;
+      }
+
+      .ant-steps-item-content {
+        margin-top: 5px;
+        * {
+          font-size: 15px;
+          font-weight: bold;
+        }
+      }
+    }
   }
+
   .content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
     .basic-info-wrapper {
       display: flex;
       flex-direction: column;
@@ -24,7 +36,7 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 2em;
+      gap: 1em;
 
       .general-tag {
         width: 100%;
@@ -98,6 +110,60 @@
       input {
         text-align: center;
       }
+    }
+  }
+}
+
+.drug-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2em;
+
+  .fields-wrabber {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .details-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 2em;
+    justify-content: center;
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+      width: 100%;
+    }
+    .dose {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .duration {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .how {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1em;
+    }
+    .notes {
+      width: 100%;
     }
   }
 }

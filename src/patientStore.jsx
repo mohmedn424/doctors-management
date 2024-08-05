@@ -6,66 +6,61 @@ import pb from './lib/pocketbase';
 import { message, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-// const fetchPatient = async () => {
-//   get('diagnosis').then(async (val) => {
-//     const setDiagnosis =
-//       useFullDaignosisFetch.getState().setDiagnosis;
-//     if (val === undefined || val.DATAVERSION !== DATAVERSION) {
-//       notification.open({
-//         message: (
-//           <span>
-//             <strong>Downloading diagnosis</strong>
-//           </span>
-//         ),
-//         key: 'loadingDiagnosis',
-//         description: (
-//           <p>
-//             The application is downloading diagnosis database in the
-//             background.
-//             <br />
-//             When it ends you will get another notifiction
-//           </p>
-//         ),
-//         closable: true,
-//         duration: 0,
-//         placement: 'bottomRight',
-//         icon: <LoadingOutlined />,
-//       });
-//       const records = await pb.collection('diseases').getFullList({
-//         sort: 'disease',
-//         // fields: 'disease,id',
-//       });
-//       set('diagnosis', { records, DATAVERSION });
-//       setDiagnosis(records);
-//       notification.destroy('loadingDiagnosis');
-//       message.success({
-//         content: 'Diagnosis database downloaded successfully',
-//         key: 'loadingDiagnosis',
-//         duration: 6,
-//       });
-//     } else {
-//       setDiagnosis(val.records);
-//     }
-//   });
-// };
-// // fetchDiagnosis();
+const LOCALSTORAGE_TOKEN_DURATION = 86400;
 
-export const usePatientQueryFetch = create((set) => ({
+export const usePatientQuery = create((set) => ({
   queryResult: [],
-  searchValue: '',
+  queryResultOptions: [],
 
-  setQueryResult: async (val) => {
-    if (val.length > 1) {
-      const resultList = await pb
-        .collection('patients')
-        .getList(1, 20, {
-          filter: `name ~ "${val}"`,
-          fields: 'name,address,id',
-        });
-      console.log(resultList);
-      set({ queryResult: resultList.items });
-    }
+  queryPatient: (val) => {
+    if (val.length > 1) fetchPatients(val);
   },
 
-  setSearchValue: (val) => set({ searchValue: val }),
+  setQueryResult: async (val) => {
+    const options = val.map((patient) => ({
+      label: `${patient.name} | ${patient.address}`,
+      value: patient.name,
+      key: patient.id,
+    }));
+
+    set({ queryResult: val });
+    set({ queryResultOptions: options });
+  },
 }));
+
+const setQueryResult = usePatientQuery.getState().setQueryResult;
+
+const TimeStampGen = () => {
+  return Math.round(Date.now() / 1000);
+};
+
+const fetchLogic = async (searchVal) => {
+  const resultList = await pb.collection('patients').getList(1, 30, {
+    filter: `name ~ "${searchVal}"`,
+    fields: 'name,address,id',
+  });
+
+  resultList.items.length > 0 &&
+    localStorage.setItem(
+      searchVal,
+      JSON.stringify({
+        items: [...resultList.items],
+        timeStamp: TimeStampGen(),
+      })
+    );
+
+  setQueryResult(resultList.items);
+};
+
+const fetchPatients = async (searchVal) => {
+  if (localStorage.getItem(searchVal)) {
+    const local = JSON.parse(localStorage.getItem(searchVal));
+    const localStamp = local.timeStamp;
+
+    TimeStampGen() - localStamp > LOCALSTORAGE_TOKEN_DURATION
+      ? fetchLogic()
+      : setQueryResult(local.items);
+  } else {
+    fetchLogic();
+  }
+};

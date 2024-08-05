@@ -1,16 +1,19 @@
 import { Button, Select } from 'antd';
-import { usePatientQueryFetch } from '../patientStore';
+import { usePatientQuery } from '../patientStore';
 
 export default function PatientSearch() {
-  const setQueryResult = usePatientQueryFetch(
-    (state) => state.setQueryResult
+  const queryPatient = usePatientQuery((state) => state.queryPatient);
+  const queryResultOptions = usePatientQuery(
+    (state) => state.queryResultOptions
   );
 
   return (
     <Select
       showSearch
       size="large"
-      onSearch={(text) => setQueryResult(text)}
+      onSearch={(text) => queryPatient(text)}
+      options={queryResultOptions}
+      allowClear
       notFoundContent={
         <>
           <h3

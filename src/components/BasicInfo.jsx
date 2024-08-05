@@ -51,7 +51,6 @@ const BasicInfo = memo(() => {
 
   return (
     <div className="basic-info-wrapper">
-      <h1>Basic Info</h1>
       <Form
         className="form"
         layout="vertical"

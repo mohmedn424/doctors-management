@@ -1,14 +1,26 @@
-import { Table, Tag } from 'antd';
+import { Segmented, Table, Tag } from 'antd';
 import { columns } from './DrugsColumns';
-import { useSelectedDiagnosis } from '../store';
+import {
+  useCurrentPrescriptionType,
+  useSelectedDiagnosis,
+} from '../store';
 import { useSelectedDrugs } from '../drugsStore';
 import { useSelectedTreatments } from '../treatmentsStore';
+import { useRouterState } from '@tanstack/react-router';
 
 export default function PrescriptionTable() {
+  const routeState = useRouterState({
+    select: (s) => s.location.state,
+  });
+
   const selected = useSelectedDiagnosis((state) => state.selected);
   const { selectedDrugs } = useSelectedDrugs();
 
   const { selectedTreatments } = useSelectedTreatments();
+
+  const setStatus = useCurrentPrescriptionType(
+    (state) => state.setStatus
+  );
 
   return (
     <Table
@@ -80,7 +92,38 @@ export default function PrescriptionTable() {
       )}
       title={() => (
         <>
-          <h1>Current Drugs</h1>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h1>
+              Current Drugs{' '}
+              <sup
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                {selectedDrugs.length}
+              </sup>
+            </h1>
+            <Segmented
+              size="large"
+              onChange={(e) => setStatus(e)}
+              defaultValue={routeState.consult ? 'consult' : 'new'}
+              options={[
+                {
+                  label: 'New comer',
+                  value: 'new',
+                },
+                { label: 'Consult', value: 'consult' },
+              ]}
+              className="segment"
+            />
+          </div>
           <p style={{ fontSize: 16 }}>
             {selected.length > 0 && (
               <>

@@ -1,6 +1,7 @@
 import {
   Button,
   Form,
+  Input,
   InputNumber,
   message,
   Radio,
@@ -74,7 +75,7 @@ export default function DrugsSelector() {
         name="drugSelector"
         size="large"
         layout="inline"
-        className="form-container"
+        className="drug-container"
         onFinish={submitHandler}
         initialValues={{
           dose: 2,
@@ -122,52 +123,99 @@ export default function DrugsSelector() {
             />
           </Form.Item>
           <div className="details-wrapper">
-            <div className="form-items-container">
-              <Form.Item style={{ width: '200px' }} name="dose">
-                <InputNumber
+            <div className="row">
+              <div className="dose">
+                <Form.Item style={{ width: '200px' }} name="dose">
+                  <InputNumber
+                    disabled={selected === undefined}
+                    name="dose"
+                    addonBefore="Dose"
+                    addonAfter="unit"
+                    changeOnWheel
+                    min={1}
+                    max={6}
+                    controls={false}
+                  />
+                </Form.Item>
+                <Form.Item name="doseType">
+                  <Radio.Group
+                    disabled={selected === undefined}
+                    optionType="button"
+                    buttonStyle="solid"
+                    popupMatchSelectWidth={false}
+                    options={[
+                      { label: 'daily', value: 'daily' },
+                      { label: 'weekly', value: 'weekly' },
+                    ]}
+                  />
+                </Form.Item>
+              </div>
+              <div className="duration">
+                <Form.Item style={{ width: '180px' }} name="duration">
+                  <InputNumber
+                    disabled={selected === undefined}
+                    addonBefore="Duration"
+                    changeOnWheel
+                    min={1}
+                    controls={false}
+                  />
+                </Form.Item>
+                <Form.Item name="durationType">
+                  <Radio.Group
+                    disabled={selected === undefined}
+                    optionType="button"
+                    buttonStyle="solid"
+                    popupMatchSelectWidth={false}
+                    options={[
+                      { label: 'days', value: 'days' },
+                      { label: 'weeks', value: 'weeks' },
+                    ]}
+                  />
+                </Form.Item>
+              </div>
+            </div>
+
+            <div className="how" style={{ margin: 'auto' }}>
+              <Form.Item style={{ width: '150px' }} name="period">
+                <Select
                   disabled={selected === undefined}
-                  name="dose"
-                  addonBefore="Dose"
-                  addonAfter="unit"
-                  changeOnWheel
-                  min={1}
-                  max={6}
-                  controls={false}
+                  allowClear
+                  optionType="button"
+                  buttonStyle="solid"
+                  popupMatchSelectWidth={false}
+                  options={[
+                    { label: 'ربع ساعة', value: 'fiften' },
+                    { label: 'نص ساعة', value: 'half' },
+                    { label: 'ساعة', value: 'hour' },
+                  ]}
                 />
               </Form.Item>
-              <Form.Item name="doseType">
+              <Form.Item name="state">
                 <Radio.Group
                   disabled={selected === undefined}
                   optionType="button"
                   buttonStyle="solid"
                   popupMatchSelectWidth={false}
                   options={[
-                    { label: 'daily', value: 'daily' },
-                    { label: 'weekly', value: 'weekly' },
+                    { label: 'قبل الاكل', value: 'before' },
+                    { label: 'مع الاكل', value: 'through' },
+                    { label: 'بعد الاكل', value: 'after' },
                   ]}
                 />
               </Form.Item>
             </div>
-            <div className="form-items-container">
-              <Form.Item style={{ width: '180px' }} name="duration">
-                <InputNumber
+            <div className="notes" style={{ margin: 'auto' }}>
+              <Form.Item
+                name="note"
+                style={{
+                  width: '100%',
+                }}
+                label="notes"
+              >
+                <Input.TextArea
                   disabled={selected === undefined}
-                  addonBefore="Duration"
-                  changeOnWheel
-                  min={1}
-                  controls={false}
-                />
-              </Form.Item>
-              <Form.Item name="durationType">
-                <Radio.Group
-                  disabled={selected === undefined}
-                  optionType="button"
-                  buttonStyle="solid"
-                  popupMatchSelectWidth={false}
-                  options={[
-                    { label: 'days', value: 'days' },
-                    { label: 'weeks', value: 'weeks' },
-                  ]}
+                  // popupMatchSelectWidth={false}
+                  autoSize
                 />
               </Form.Item>
             </div>

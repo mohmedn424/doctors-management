@@ -1,6 +1,6 @@
 import './prescription.scss';
 
-import { Button, Segmented, Select, Steps } from 'antd';
+import { Steps } from 'antd';
 import BasicInfo from '../../components/BasicInfo';
 import PastHistory from '../../components/PastHistory';
 import CurrentHistory from '../../components/CurrentHistory';
@@ -12,16 +12,7 @@ import {
 import { useRouterState } from '@tanstack/react-router';
 import { memo, useEffect } from 'react';
 import { useSelectedDrugs } from '../../drugsStore';
-import PatientSearch from '../../components/PatientSearch';
-
-const arr = new Array(100).fill({ label: 'patient name' });
-
-const options = [
-  {
-    label: 'Current Queue',
-    options: arr,
-  },
-];
+import { useSelectedTreatments } from '../../treatmentsStore';
 
 let render;
 
@@ -32,6 +23,10 @@ const PrescriptionPage = memo(({ id = null }) => {
   );
   const setSelected = useSelectedDiagnosis(
     (state) => state.setSelected
+  );
+
+  const setSelectedTreatments = useSelectedTreatments(
+    (state) => state.setSelectedTreatments
   );
   const { status, setStatus } = useCurrentPrescriptionType();
 
@@ -49,6 +44,7 @@ const PrescriptionPage = memo(({ id = null }) => {
     setCurrent(0);
     setSelectedDrugs([]);
     setSelected([]);
+    setSelectedTreatments([]);
   }, []);
 
   switch (current) {
@@ -64,25 +60,15 @@ const PrescriptionPage = memo(({ id = null }) => {
   }
   return (
     <div className="prescription-wrapper">
-      {!id && <PatientSearch />}
-      <Segmented
-        size="large"
-        block
-        onChange={(e) => setStatus(e)}
-        // value={ }
-        defaultValue={routeState.consult ? 'consult' : 'new'}
-        options={[
-          {
-            label: 'New comer',
-            value: 'new',
-          },
-          { label: 'Consult', value: 'consult' },
-        ]}
-        style={{ width: '100%' }}
-      />
+      {/* {!id && <PatientSearch />} */}
+
       <Steps
         className="select"
         current={current}
+        labelPlacement="vertical"
+        // progressDot={true}
+        type="navigation"
+        size="small"
         items={[
           {
             title: 'Basic info',
@@ -98,6 +84,7 @@ const PrescriptionPage = memo(({ id = null }) => {
           setCurrent(value);
         }}
       />
+      <br />
       <div className="content">{render}</div>
     </div>
   );

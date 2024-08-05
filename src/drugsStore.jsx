@@ -81,26 +81,28 @@ export const useDrugSearchValue = create((set) => ({
 export const useResultDrugs = create((set) => ({
   resultData: [],
   setResultData: (searchValue) => {
-    const fullData = useFullDrugsOptions.getState().drugsData;
+    if (searchValue.length > 2) {
+      const fullData = useFullDrugsOptions.getState().drugsData;
 
-    const type = useDrugSearchType.getState().type;
-    const keys =
-      type === true
-        ? { keys: ['activeingredient'] }
-        : {
-            keys: ['tradename'],
-          };
+      const type = useDrugSearchType.getState().type;
+      const keys =
+        type === true
+          ? { keys: ['activeingredient'] }
+          : {
+              keys: ['tradename'],
+            };
 
-    const fuse = new Fuse(fullData, {
-      ...keys,
-      threshold: 0.2,
-      useExtendedSearch: true,
-    });
-    const results = fuse.search(searchValue, { limit: 30 });
+      const fuse = new Fuse(fullData, {
+        ...keys,
+        threshold: 0.2,
+        useExtendedSearch: true,
+      });
+      const results = fuse.search(searchValue, { limit: 30 });
 
-    const items = results.map((result) => result.item);
+      const items = results.map((result) => result.item);
 
-    set({ resultData: items });
+      set({ resultData: items });
+    }
   },
 }));
 

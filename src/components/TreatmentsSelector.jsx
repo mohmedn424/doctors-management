@@ -17,7 +17,7 @@ export default function TreatmentsSelector() {
         onSearch={(e) => setResultData(e)}
         onChange={(e) => setSelectedTreatments(e)}
         mode="multiple"
-        placeholder="Start adding diagnosis"
+        placeholder="Start adding Labs & Scans"
         style={{ width: '100%' }}
         filterOption={false}
         options={resultData}

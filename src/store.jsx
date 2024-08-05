@@ -95,7 +95,7 @@ export const useResultDiagnosis = create((set) => ({
       ignoreLocation: true,
       useExtendedSearch: true,
     });
-    const results = fuse.search(searchValue);
+    const results = fuse.search(searchValue, { limit: 30 });
 
     const items = results.map((result) => result.item);
 
