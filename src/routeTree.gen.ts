@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as PrescriptionIndexImport } from './routes/prescription/index'
 import { Route as PrescriptionIdImport } from './routes/prescription/$id'
+import { Route as PrescriptionSubmitIdImport } from './routes/prescription/submit/$id'
 
 // Create/Update Routes
 
@@ -29,6 +30,11 @@ const PrescriptionIndexRoute = PrescriptionIndexImport.update({
 
 const PrescriptionIdRoute = PrescriptionIdImport.update({
   path: '/prescription/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PrescriptionSubmitIdRoute = PrescriptionSubmitIdImport.update({
+  path: '/prescription/submit/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -57,6 +63,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrescriptionIndexImport
       parentRoute: typeof rootRoute
     }
+    '/prescription/submit/$id': {
+      id: '/prescription/submit/$id'
+      path: '/prescription/submit/$id'
+      fullPath: '/prescription/submit/$id'
+      preLoaderRoute: typeof PrescriptionSubmitIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -66,6 +79,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   PrescriptionIdRoute,
   PrescriptionIndexRoute,
+  PrescriptionSubmitIdRoute,
 })
 
 /* prettier-ignore-end */
@@ -78,7 +92,8 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/prescription/$id",
-        "/prescription/"
+        "/prescription/",
+        "/prescription/submit/$id"
       ]
     },
     "/": {
@@ -89,6 +104,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/prescription/": {
       "filePath": "prescription/index.jsx"
+    },
+    "/prescription/submit/$id": {
+      "filePath": "prescription/submit/$id.jsx"
     }
   }
 }

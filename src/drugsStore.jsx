@@ -34,7 +34,7 @@ const fetchDrugs = async () => {
       });
       const records = await pb.collection('drugs').getFullList({
         sort: 'tradename',
-        fields: 'tradename,activeingredient,new_price',
+        fields: 'tradename,activeingredient,new_price,id',
       });
       set('drugs', { records, DATAVERSION });
       setDrugs(records);

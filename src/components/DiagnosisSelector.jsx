@@ -20,7 +20,7 @@ export default memo(function DiagnosisSelector() {
         onChange={(e) => setSelected(e)}
         mode="multiple"
         placeholder="Start adding diagnosis"
-        style={{ width: '100%' }}
+        style={{ width: '100%', marginBottom: '3em' }}
         filterOption={false}
         options={resultData}
         allowClear

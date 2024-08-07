@@ -15,7 +15,10 @@ export default function TreatmentsSelector() {
       <Select
         size="large"
         onSearch={(e) => setResultData(e)}
-        onChange={(e) => setSelectedTreatments(e)}
+        onChange={(e) => {
+          console.log(e);
+          setSelectedTreatments(e);
+        }}
         mode="multiple"
         placeholder="Start adding Labs & Scans"
         style={{ width: '100%' }}

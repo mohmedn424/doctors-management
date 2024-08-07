@@ -1,10 +1,10 @@
 import { create } from 'zustand';
-import Fuse from 'fuse.js';
-import dayjs from 'dayjs';
-import { get, set } from 'idb-keyval';
+
 import pb from './lib/pocketbase';
-import { message, notification } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
+import { useSelectedDrugs } from './drugsStore';
+import { useSelectedDiagnosis } from './store';
+import { useSelectedTreatments } from './treatmentsStore';
 
 const LOCALSTORAGE_TOKEN_DURATION = 86400;
 
@@ -27,6 +27,27 @@ export const usePatientQuery = create((set) => ({
     set({ queryResultOptions: options });
   },
 }));
+
+export const createPatientRecord = async () => {
+  const { selectedDrugs } = useSelectedDrugs.getState();
+  const { selected: selectedDiagnosis } =
+    useSelectedDiagnosis.getState();
+
+  const { selectedTreatments } = useSelectedTreatments.getState();
+
+  const drugs = selectedDrugs.map((drug) => drug.id);
+  const diagnosis = selectedDiagnosis.map((diagnose) => diagnose.key);
+  const treatments = selectedTreatments.map((treat) => treat.key);
+
+  const record = await pb.collection('patient_history').create({
+    patient: 'rwapuqhivoh6ax5',
+    date: dayjs().format('YYYY-MM-DD | hh-mm A'),
+    doctor: 'nkzd0cqdmrhcr9e',
+    drugs,
+    diagnosis,
+    treatments,
+  });
+};
 
 const setQueryResult = usePatientQuery.getState().setQueryResult;
 
